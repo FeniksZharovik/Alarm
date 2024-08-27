@@ -7,6 +7,7 @@ import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.os.Build;
 import androidx.core.app.NotificationCompat;
 
@@ -23,11 +24,15 @@ public class AlarmReceiver extends BroadcastReceiver {
                 .setContentTitle("Alarm")
                 .setContentText("Your alarm is ringing!")
                 .setPriority(NotificationCompat.PRIORITY_HIGH)
-                .setDefaults(Notification.DEFAULT_SOUND | Notification.DEFAULT_VIBRATE)
+                .setDefaults(Notification.DEFAULT_VIBRATE)
                 .setAutoCancel(true);
 
         NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
         notificationManager.notify(0, builder.build());
+
+        // Play the MP3 sound
+        MediaPlayer mediaPlayer = MediaPlayer.create(context, R.raw.alarm_sound); // Update with your MP3 file name
+        mediaPlayer.start();
     }
 
     private void createNotificationChannel(Context context) {
